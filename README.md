@@ -1,30 +1,23 @@
-# React + TypeScript + Vite
+# IMAGE GALLERY
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Technologies used
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+```json
+  "@heroicons/react": "^2.1.3",
+  "autoprefixer": "^10.4.19",
+  "axios": "^1.6.8",
+  "postcss": "^8.4.38",
+  "react": "^18.2.0",
+  "react-dom": "^18.2.0",
+  "react-router-dom": "^6.22.3",
+  "tailwindcss": "^3.4.1"
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## .env File format
+
+```yaml
+VITE_API_URL = <URL_GOES_HERE>
+VITE_API_KEY = <API_KEY_GOES_HERE>
+```
+
+Additionaly you can find InfiniteLoading implementation on [branch](https://github.com/Brandious/ImageGallery/tree/feature/InfiniteScroller)
