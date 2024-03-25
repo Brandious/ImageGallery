@@ -1,5 +1,5 @@
 import { ArrowsPointingOutIcon, HeartIcon } from "@heroicons/react/16/solid";
-import { useContext, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { HitType } from "../types/ResponseType";
 import ImageModal from "./ImageModal";
 import { LikedContext } from "../context/LikedContext";
@@ -7,12 +7,17 @@ import { LikedContext } from "../context/LikedContext";
 export const ImageGrid = ({
   results,
   loading,
+  updatePage,
 }: {
   results: HitType[];
   loading: boolean;
+  updatePage?: (page: number) => void;
 }) => {
+  const bottomBoundaryRef = useRef(null);
+
   const [showModal, setShowModal] = useState(false);
   const [preview, setPreview] = useState<HitType>({} as HitType);
+  const [page, setPage] = useState(1);
 
   const { likedImages, likeHandler, dislikeHandler } = useContext(LikedContext);
 
@@ -30,6 +35,26 @@ export const ImageGrid = ({
   const alreadyLiked = (image: HitType) => {
     return likedImages.some((likedImage) => likedImage.id === image.id);
   };
+
+  const scrollObserver = useCallback(
+    (node: Element) => {
+      new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.intersectionRatio > 0) {
+            updatePage && updatePage(page + 1);
+            setPage((prev) => prev + 1);
+          }
+        });
+      }).observe(node);
+    },
+    [updatePage]
+  );
+
+  useEffect(() => {
+    if (bottomBoundaryRef.current) {
+      scrollObserver(bottomBoundaryRef.current);
+    }
+  }, [scrollObserver, bottomBoundaryRef]);
 
   if (results.length === 0) return <p>No results found</p>;
   if (loading) return <p>Loading</p>;
@@ -70,7 +95,11 @@ export const ImageGrid = ({
           </div>
         ))}
       </div>
-
+      <div
+        id="page-bottom-boundary"
+        className="h-1 w-1 bg-transparent"
+        ref={bottomBoundaryRef}
+      ></div>
       <ImageModal
         showModal={showModal}
         setShowModal={setShowModal}
